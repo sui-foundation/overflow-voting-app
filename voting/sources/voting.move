@@ -16,6 +16,10 @@ module voting::voting {
     votes: table::Table<address, u64>
   }
 
+  public struct VoterCap has key, store {
+    id: UID
+  }
+
   fun init(ctx: &mut TxContext) {
     let votes = Votes {
       id: object::new(ctx),
@@ -25,9 +29,28 @@ module voting::voting {
     };
 
     transfer::share_object(votes);
+
+    transfer::transfer(
+      VoterCap {
+        id: object::new(ctx), 
+      }, 
+      ctx.sender()
+    )
   }
 
-  public fun vote(project_id: u64, voter: address, votes: &mut Votes, ctx: &mut TxContext) {
+  public fun vote(_: &VoterCap, /*track_id: u64,*/ project_id: u64, voter: address, votes: &mut Votes, ctx: &mut TxContext) {
+    assert_user_has_not_voted(voter, votes);
+
     
+  }
+
+  fun assert_user_has_not_voted(user: address, votes: &Votes) {
+    assert!(
+      table::contains(
+        &votes.votes, 
+        user
+      ) == false, 
+      0
+    );
   }
 }
