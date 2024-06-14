@@ -3,13 +3,14 @@
 module voting::voting {
   use std::string;
   use sui::table;
+  use sui::vec_map;
 
 
   public struct Votes has key {
     id: UID, 
     total_votes: u64, 
     project_list: vector<Project>,
-    votes: table::Table<address, u64>,
+    votes: table::Table<address, vector<u64>>,
     voting_active: bool
   }
 
@@ -49,23 +50,27 @@ module voting::voting {
     )
   }
 
-  public fun vote(_: &VoterCap, /*track_id: u64,*/ project_id: u64, voter: address, votes: &mut Votes) {
+  public fun vote(_: &VoterCap, /*track_id: u64,*/ project_ids: vector<u64>, voter: address, votes: &mut Votes) {
     assert_user_has_not_voted(voter, votes);
-    assert_valid_project_id(project_id, votes);
+    assert_valid_project_ids(project_ids, votes);
     assert_voting_is_active(votes);
 
     // Increment total votes
-    votes.total_votes = votes.total_votes + 1;
+    votes.total_votes = votes.total_votes + project_ids.length();
 
     // Update project's vote
-    let project = &mut votes.project_list[project_id];
-    project.votes = project.votes + 1;
+    let mut curr_index = 0;
+    while (curr_index < project_ids.length()) {
+      let project = &mut votes.project_list[curr_index];
+      project.votes = project.votes + 1;
+      curr_index = curr_index + 1;
+    };
 
     // Record user's vote
     table::add(
       &mut votes.votes, 
       voter, 
-      project_id
+      project_ids
     );
   }
 
@@ -83,11 +88,22 @@ module voting::voting {
     );
   }
 
-  fun assert_valid_project_id(project_id: u64, votes: &Votes) {
+  fun assert_valid_project_ids(project_ids: vector<u64>, votes: &Votes) {
     assert!(
-      project_id < votes.project_list.length(),
+      project_ids.length() <= 3, 
       0
     );
+    
+    let mut curr_index = 0;
+    let mut ids = vec_map::empty();
+    while (curr_index < project_ids.length()) {
+      assert!(
+        project_ids[curr_index] < votes.project_list.length(),
+        0
+      );
+      vec_map::insert(&mut ids, project_ids[curr_index], 0); // this will abort if there is a dup
+      curr_index = curr_index + 1;
+    };
   }
 
   fun assert_voting_is_active(votes: &Votes) {
