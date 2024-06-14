@@ -53,6 +53,56 @@ const dummyProjects = [
     description: "This is a description of project 5",
     votes: 0,
   },
+  {
+    name: "Project 6",
+    description: "This is a description of project 6",
+    votes: 0,
+  },
+  {
+    name: "Project 7",
+    description: "This is a description of project 7",
+    votes: 0,
+  },
+  {
+    name: "Project 8",
+    description: "This is a description of project 8",
+    votes: 0,
+  },
+  {
+    name: "Project 9",
+    description: "This is a description of project 9",
+    votes: 0,
+  },
+  {
+    name: "Project 10",
+    description: "This is a description of project 10",
+    votes: 0,
+  },
+  {
+    name: "Project 11",
+    description: "This is a description of project 11",
+    votes: 0,
+  },
+  {
+    name: "Project 12",
+    description: "This is a description of project 12",
+    votes: 0,
+  },
+  {
+    name: "Project 13",
+    description: "This is a description of project 13",
+    votes: 0,
+  },
+  {
+    name: "Project 14",
+    description: "This is a description of project 14",
+    votes: 0,
+  },
+  {
+    name: "Project 15",
+    description: "This is a description of project 15",
+    votes: 0,
+  },
 ];
 
 export default function Page() {
