@@ -443,26 +443,14 @@ export default function Page() {
 
   return (
     <div className="flex flex-col projects-center justify-start">
-      <a
-        href="https://github.com/dantheman8300/enoki-example-app"
-        target="_blank"
-        className="absolute top-4 right-0 sm:right-4"
-        onClick={() => {
-          //track("github");
-        }}
-      >
-        <Button variant={"link"} size={"icon"}>
-          <Github />
-        </Button>
-      </a>
-      <div>
-        <h1 className="text-4xl font-bold m-4">Overflow Voting</h1>
-        <p className="text-md m-4 opacity-50 max-w-md">
-          Use this app to vote for your favorite project in the Overflow hackathon!
-          Votes are stored on the Sui network and can be viewed on this page.
-        </p>
+      <h1 className="text-4xl font-bold m-4">Sui Overflow Voting App</h1>
+      <p className="text-md m-4 opacity-50 max-w-md">
+        Use this app to vote for your favorite project in the Overflow hackathon!
+        Votes are stored on the Sui network and can be viewed on this page.
+      </p>
+      <div className="fixed sm:relative sm:bottom-0 w-full border bottom-4 flex flex-row items-center justify-center">
+        <Button className="w-60" onClick={startLogin}>Sign in with Google</Button>
       </div>
-      <Button onClick={startLogin}>Sign in with Google</Button>
     </div>
   );
 }
