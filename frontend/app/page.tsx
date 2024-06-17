@@ -377,19 +377,19 @@ export default function Page() {
           </PopoverContent>
         </Popover>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-16">
             <FormField
               control={form.control}
               name="projects"
               render={() => (
                 <FormItem>
-                  <div className="mb-4">
+                  <div className="mb-4 px-4">
                     <FormLabel className="text-base">Projects</FormLabel>
                     <FormDescription>
                       Select the projects you want to display in the sidebar.
                     </FormDescription>
                   </div>
-                  <div className="flex flex-wrap justify-center gap-4">
+                  <div className="flex flex-wrap justify-center gap-4 px-4">
                     {projects.map((project, index) => (
                       <FormField
                         key={project.id}
@@ -399,7 +399,7 @@ export default function Page() {
                           return (
                             <FormItem
                               key={project.id}
-                              className="flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center"
+                              className="flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center w-full sm:w-96 cursor-pointer"
                             >
                               <FormControl>
                                 <Checkbox
@@ -427,11 +427,14 @@ export default function Page() {
                       />
                     ))}
                   </div>
-                  <FormMessage />
+                  <div className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between backdrop-filter backdrop-blur-sm bg-opacity-30 w-full">
+                    <Button type="submit">Submit</Button>
+                    <FormMessage />
+                  </div>
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            
           </form>
         </Form>
       </div>
