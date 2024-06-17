@@ -286,7 +286,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col projects-center justify-start">
+    <div className="flex flex-col items-center justify-start">
       <h1 className="text-4xl font-bold m-4">Sui Overflow Voting App</h1>
       <p className="text-md m-4 opacity-50 max-w-md">
         Use this app to vote for your favorite project in the Overflow hackathon!
