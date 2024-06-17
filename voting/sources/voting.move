@@ -437,12 +437,12 @@ module voting::voting {
     transfer::share_object(votes);
   }
 
-  public fun vote(project_ids: vector<u64>, votes: &mut Votes, address_seed: u256, iss: string::String, ctx: &TxContext) {
+  public fun vote(project_ids: vector<u64>, votes: &mut Votes, address_seed: u256, ctx: &TxContext) {
 
     let voter = ctx.sender();
 
     // assert_user_has_not_voted(voter, votes);
-    assert_sender_zklogin(address_seed, iss, ctx);
+    assert_sender_zklogin(address_seed, ctx);
     assert_valid_project_ids(project_ids, votes);
     assert_voting_is_active(votes);
 
@@ -505,8 +505,9 @@ module voting::voting {
     );
   }
 
-  fun assert_sender_zklogin(address_seed: u256, issuer: string::String, ctx: &TxContext) {
+  fun assert_sender_zklogin(address_seed: u256, ctx: &TxContext) {
     let sender = ctx.sender();
+    let issuer = string::utf8(b"https://accounts.google.com");
     assert!(check_zklogin_issuer(sender, address_seed, &issuer), EInvalidProof);
   }
 }

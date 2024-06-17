@@ -202,8 +202,7 @@ export default function Page() {
       arguments: [
         votingProjectIds, 
         txb.object(process.env.VOTES_OBJECT_ADDRESS!),
-	txb.pure.u256(addressSeed),
-	txb.pure.string("https://accounts.google.com")
+        txb.pure.u256(addressSeed),
       ]
     });
 
