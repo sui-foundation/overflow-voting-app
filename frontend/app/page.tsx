@@ -47,39 +47,6 @@ type Project = {
   votes: number;
 }
 
-const dummyProjects = [
-  {
-    id: 0, 
-    name: "Aalps Protocol",
-    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh", 
-    votes: 0
-  },
-  {
-    id: 1, 
-    name: "AdCommand",
-    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recd95WbIXs5qiLmM",
-    votes: 0
-  },
-  {
-    id: 2,
-    name: "Aeon",
-    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recJHliYSNdxFXdCB",
-    votes: 0
-  },
-  {
-    id: 3,
-    name: "Aalps Protocol",
-    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh",
-    votes: 0
-  },
-  {
-    id: 4,
-    name: "Aalps Protocol",
-    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh",
-    votes: 0
-  },
-];
-
 const FormSchema = z.object({
   projects: z.array(z.number())
   .nonempty({
@@ -141,7 +108,16 @@ export default function Page() {
 
     toast.promise(vote(values.projects), {
       loading: "Submitting vote...",
-      success: (data) => {
+      success: async (data) => {
+
+        console.log(data)
+
+        await fetchProjects();
+
+        form.reset({
+          projects: []
+        })
+
         return (
           <span className="flex flex-row items-center gap-2">
             Vote submitted successfully!{" "}
@@ -440,7 +416,7 @@ export default function Page() {
                                 />
                               </FormControl>
                               <FormLabel className="font-normal">
-                                {project.name}
+                                {project.name} ({project.votes} votes)
                               </FormLabel>
                               <a href={project.airTableUrl} target="_blank">
                                 <ExternalLink className="w-4" />
