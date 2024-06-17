@@ -5,7 +5,9 @@ module voting::voting {
   use sui::table;
   use sui::vec_map;
   use sui::url;
+  use sui::zklogin_verified_issuer::check_zklogin_issuer;
 
+  const EInvalidProof: u64 = 1;
 
   public struct Votes has key {
     id: UID, 
@@ -435,11 +437,12 @@ module voting::voting {
     transfer::share_object(votes);
   }
 
-  public fun vote(project_ids: vector<u64>, votes: &mut Votes, ctx: &TxContext) {
+  public fun vote(project_ids: vector<u64>, votes: &mut Votes, address_seed: u256, ctx: &TxContext) {
 
     let voter = ctx.sender();
 
     // assert_user_has_not_voted(voter, votes);
+    assert_sender_zklogin(address_seed, ctx);
     assert_valid_project_ids(project_ids, votes);
     assert_voting_is_active(votes);
 
@@ -500,5 +503,11 @@ module voting::voting {
       votes.voting_active, 
       0
     );
+  }
+
+  fun assert_sender_zklogin(address_seed: u256, ctx: &TxContext) {
+    let sender = ctx.sender();
+    let issuer = string::utf8(b"https://accounts.google.com");
+    assert!(check_zklogin_issuer(sender, address_seed, &issuer), EInvalidProof);
   }
 }

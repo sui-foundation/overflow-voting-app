@@ -193,12 +193,16 @@ export default function Page() {
 
     console.log('votes object address', process.env.VOTES_OBJECT_ADDRESS!)
     console.log('voting module address', process.env.VOTING_MODULE_ADDRESS!)
+    const { addressSeed } = await enokiFlow.getProof({
+      network: "testnet"
+    })
 
     txb.moveCall({
       target: `${process.env.VOTING_MODULE_ADDRESS}::voting::vote`, 
       arguments: [
         votingProjectIds, 
-        txb.object(process.env.VOTES_OBJECT_ADDRESS!)
+        txb.object(process.env.VOTES_OBJECT_ADDRESS!),
+        txb.pure.u256(addressSeed),
       ]
     });
 
