@@ -443,14 +443,15 @@ module voting::voting {
     assert_valid_project_ids(project_ids, votes);
     assert_voting_is_active(votes);
 
-    // Increment total votes
-    votes.total_votes = votes.total_votes + project_ids.length();
-
     // Update project's vote
     let mut curr_index = 0;
     while (curr_index < project_ids.length()) {
-      let project = &mut votes.project_list[curr_index];
+      let project = &mut votes.project_list[project_ids[curr_index]];
       project.votes = project.votes + 1;
+
+      // Increment total votes
+      votes.total_votes = votes.total_votes + 1;
+
       curr_index = curr_index + 1;
     };
 
