@@ -359,7 +359,7 @@ export default function Page() {
                       />
                     ))}
                   </div>
-                  <div style={{backdropFilter: "blur(4px)", opacity: 10}} className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
+                  <div style={{WebkitBackdropFilter: "blur(4px)", backdropFilter: "blur(4px)", opacity: 10}} className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
                     <Button type="submit">Submit</Button>
                     <FormMessage />
                   </div>
