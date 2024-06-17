@@ -17,7 +17,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
-      <ScaleLoader color="#000" />
+      <ScaleLoader color="#4da2ff" />
     </div>
   );
 }

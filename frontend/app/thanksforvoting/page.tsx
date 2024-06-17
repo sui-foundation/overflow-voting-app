@@ -10,11 +10,12 @@ import { useEnokiFlow, useZkLogin } from "@mysten/enoki/react";
 import { BalanceChange } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { track } from "@vercel/analytics/react";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
 import { ZkSendLinkBuilder } from '@mysten/zksend';
 import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
+import { IconBrandX } from '@tabler/icons-react';
 
 
 
@@ -157,17 +158,15 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full min-h-screen px-4 gap-8">
       <div className="flex flex-col items-center">
-        <h1 className="text-3xl font-bold">Thanks for voting!</h1>
-        <p className="text-lg text-gray-500 text-center">
+        <h1 className="text-3xl font-medium text-deep-ocean tracking-tight">Thanks for voting!</h1>
+        <p className="text-lg text-ocean text-center">
           Your vote has been recorded. We&apos;ll announce the winners soon!
         </p>
       </div>
       <Card className="max-w-xs">
         <CardHeader>
-          <CardTitle>
-            <span>
-              You&apos;ve been minted a voter NFT!
-            </span>
+          <CardTitle className="text-center text-deep-ocean tracking-tighter">
+            You&apos;ve been given a voter NFT!
             {/* <span>You have been awarded a voter NFT for participating in the vote! The NFT is already been sent to your voting account. 
             You can withdraw it to a personal wallet using the form below.</span> */}
           </CardTitle>
@@ -184,10 +183,10 @@ export default function Page() {
           </div> */}
         </CardHeader>
         <CardContent className="flex flex-col w-full gap-2">
-          <div className="w-full flex flex-col items-center">
+          <div className="w-full flex flex-col items-center rounded-l blur-lg">
             <Image 
               src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
-              className="rounded-2xl" 
+              // className="rounded-2xl" 
               width={200} 
               height={200} 
               alt="" 
@@ -210,16 +209,16 @@ export default function Page() {
           <Button
             className="w-full"
             onClick={generateStashedLink}
-            disabled
+            // disabled
           >
-            Claim your NFT
+            Mint
           </Button>
         </CardFooter>
       </Card>
 
       <a href={`https://twitter.com/intent/tweet?text=I%20just%20received%20an%20NFT%20for%20participating%20in%20the%20Sui%20Overflow%20community%20vote!%20https://overflow-voting-app-git-main-sui-foundation.vercel.app/`}>
         <Button variant={"outline"} >
-          Share your vote on social media!
+          Share your vote on <IconBrandX />
         </Button>
       </a>
     </div>

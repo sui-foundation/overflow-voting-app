@@ -19,6 +19,9 @@ const config = {
     },
     extend: {
       colors: {
+        'sky': '#4da2ff',
+        'deep-ocean': '#030f1c',
+        'ocean': '#011829',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

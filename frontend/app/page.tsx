@@ -5,8 +5,10 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { useEnokiFlow, useZkLogin } from "@mysten/enoki/react";
 import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
-import { ExternalLink, Github, Info, LoaderCircle, LogOut, RefreshCw } from "lucide-react";
+import { BadgeInfo, ExternalLink, Github, Info, LoaderCircle, LogOut, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import OverflowBanner from "@/public/bannerv2.png";
+import SuiLogo from "@/public/Sui_Logo_White.png"
 import {
   Card,
   CardContent,
@@ -39,6 +41,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Checkbox } from "@/components/ui/checkbox";
+import Image from "next/image";
 
 type Project = {
   id: number;
@@ -142,7 +145,7 @@ export default function Page() {
     };
 
     toast.promise(promise, {
-      loading: "Loggin in...",
+      loading: "Logging in...",
     });
   };
 
@@ -225,7 +228,7 @@ export default function Page() {
   if (suiAddress) {
     return (
       <div>
-        <h1 className="text-4xl font-bold m-4">Overflow Voting</h1>
+        <h1 className="text-4xl font-medium m-4 tracking-tighter">Overflow Voting</h1>
         <Button
           className="absolute top-4 right-4"
           variant={"ghost"}
@@ -247,7 +250,7 @@ export default function Page() {
                   <div className="mb-4 px-4">
                     <FormLabel className="text-base">Vote for your favorite projects!</FormLabel>
                     <FormDescription>
-                      Select up to 3 projects to vote for. Note, you can only vote once!
+                      Click the info icon to view the details of each project and vote for up to your top 3 favorite projects. Note, you can only vote once! 
                     </FormDescription>
                   </div>
                   <div className="flex flex-wrap justify-center gap-4 px-4">
@@ -280,7 +283,7 @@ export default function Page() {
                                 {project.name} ({project.votes} votes)
                               </FormLabel>
                               <a href={project.airTableUrl} target="_blank">
-                                <ExternalLink className="w-4" />
+                                <BadgeInfo className="w-4 text-sky" />
                               </a>
                             </FormItem>
                           )
@@ -288,7 +291,7 @@ export default function Page() {
                       />
                     ))}
                   </div>
-                  <div style={{WebkitBackdropFilter: "blur(4px)", backdropFilter: "blur(4px)", opacity: 10}} className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
+                  <div style={{WebkitBackdropFilter: "blur(4px)", backdropFilter: "blur(4px)", opacity: 10}} className="fixed border-t p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
                     <Button type="submit">Submit</Button>
                     <FormMessage />
                   </div>
@@ -304,13 +307,22 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center justify-start">
-      <h1 className="text-4xl font-bold m-4">Sui Overflow Voting App</h1>
-      <p className="text-md m-4 opacity-50 max-w-md">
+      <Image src={OverflowBanner} alt="" className=" w-full max-w-screen-md pt-4 px-4" />
+      <p className="text-md m-4 text-deep-ocean w-full max-w-prose p-4">
         Use this app to vote for your favorite project in the Overflow hackathon!
-        Votes are stored on the Sui network and can be viewed on this page.
+        Votes are stored on the Sui network and results will be announced at the end of the voting period.
+        <br />
+        <br />
+        Watch the Overflow Project demos here: 
+        <br />
+        <a href="https://www.youtube.com/live/o8iwoRRsBu8" target="_blank" className="underline text-[#4da2ff]">Day #1</a> | <a href="https://www.youtube.com/live/H27LvUvPyQk" target="_blank" className="underline text-[#4da2ff]">Day #2</a>
+        <br />
+        <br />
+        This app was built using the Sui TS SDK. This app demostrates the ease of building a decentralized application with production grade security and user experience. 
+        Check out the source code <a href="https://github.com/sui-foundation/overflow-voting-app" target="_blank" className="underline text-[#4da2ff]">here</a>. 
       </p>
       <div className="fixed sm:relative sm:bottom-0 w-full bottom-4 flex flex-row items-center justify-center">
-        <Button className="w-60" onClick={startLogin}>Sign in with Google</Button>
+        <Button className="w-60 text-[#ffffff]" onClick={startLogin}>Sign in with Google</Button>
       </div>
     </div>
   );
