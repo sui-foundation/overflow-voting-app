@@ -427,7 +427,7 @@ export default function Page() {
                       />
                     ))}
                   </div>
-                  <div className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between backdrop-filter backdrop-blur-sm bg-opacity-30 w-full">
+                  <div className="fixed p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between bg-neutral-100 backdrop-filter backdrop-blur-sm bg-opacity-30 w-full">
                     <Button type="submit">Submit</Button>
                     <FormMessage />
                   </div>
