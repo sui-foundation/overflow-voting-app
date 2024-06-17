@@ -78,6 +78,19 @@ export default function Page() {
     fetchProjects()
   }, [])
 
+  useEffect(() => {
+    if (suiAddress) {
+      enokiFlow.getProof({
+        network: "testnet"
+      }).then((proof) => {
+        console.log("Proof", proof);
+      });
+      enokiFlow.getSession().then((session) => {
+        console.log('session', session)
+      })
+    }
+  }, [suiAddress]);
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof FormSchema>) {
     // Do something with the form values.
