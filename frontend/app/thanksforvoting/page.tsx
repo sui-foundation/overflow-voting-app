@@ -147,7 +147,7 @@ export default function Page() {
         </CardFooter>
       </Card>
 
-      <a href={`https://twitter.com/intent/tweet?text=I%20just%20received%20an%20NFT%20for%20participating%20in%20the%20Sui%20Overflow%20community%20vote!%20${window.location.origin}`}>
+      <a href={`https://twitter.com/intent/tweet?text=I%20just%20received%20an%20NFT%20for%20participating%20in%20the%20Sui%20Overflow%20community%20vote!%20https://overflow-voting-app-git-main-sui-foundation.vercel.app/`}>
         <Button variant={"outline"} >
           Share your vote on social media!
         </Button>
