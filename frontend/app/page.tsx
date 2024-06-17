@@ -70,10 +70,6 @@ export default function Page() {
   const enokiFlow = useEnokiFlow(); // The EnokiFlow instance
   const { address: suiAddress } = useZkLogin(); // The zkLogin instance
 
-  /* The account information of the current user. */
-  const [balance, setBalance] = useState<number>(0);
-  const [accountLoading, setAccountLoading] = useState<boolean>(true);
-
   const [votingInProgress, setVotingInProgress] = useState<boolean>(false);
 
   const [projects, setProjects] = useState<Project[]>([]);
@@ -81,24 +77,6 @@ export default function Page() {
   useEffect(() => {
     fetchProjects()
   }, [])
-
-  /**
-   * When the user logs in, fetch the account information.
-   */
-  useEffect(() => {
-    if (suiAddress) {
-      getAccountInfo();
-      enokiFlow.getProof({
-        network: "testnet"
-      }).then((proof) => {
-        console.log('proof', proof)
-      })
-
-      enokiFlow.getSession().then((session) => {
-        console.log('session', session)
-      })
-    }
-  }, [suiAddress]);
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof FormSchema>) {
@@ -150,74 +128,6 @@ export default function Page() {
 
     toast.promise(promise, {
       loading: "Loggin in...",
-    });
-  };
-
-  /**
-   * Fetch the account information of the current user.
-   */
-  const getAccountInfo = async () => {
-    if (!suiAddress) {
-      return;
-    }
-
-    setAccountLoading(true);
-
-    const balance = await client.getBalance({ owner: suiAddress });
-    setBalance(parseInt(balance.totalBalance) / 10 ** 9);
-
-    setAccountLoading(false);
-  };
-
-  /**
-   * Request SUI from the faucet.
-   */
-  const onRequestSui = async () => {
-    const promise = async () => {
-      //track("Request SUI");
-
-      // Ensures the user is logged in and has a SUI address.
-      if (!suiAddress) {
-        throw new Error("No SUI address found");
-      }
-
-      if (balance > 3) {
-        throw new Error("You already have enough SUI!");
-      }
-
-      // Request SUI from the faucet.
-      const res = await requestSuiFromFaucetV0({
-        host: getFaucetHost("testnet"),
-        recipient: suiAddress,
-      });
-
-      if (res.error) {
-        throw new Error(res.error);
-      }
-
-      return res;
-    };
-
-    toast.promise(promise, {
-      loading: "Requesting SUI...",
-      success: (data) => {
-        console.log("SUI requested successfully!", data);
-
-        const suiBalanceChange = data.transferredGasObjects
-          .map((faucetUpdate) => {
-            return faucetUpdate.amount / 10 ** 9;
-          })
-          .reduce((acc: number, change: any) => {
-            return acc + change;
-          }, 0);
-
-        setBalance(balance + suiBalanceChange);
-
-        return "SUI requested successfully! ";
-      },
-      error: (error) => {
-        return error.message;
-      },
     });
   };
 
