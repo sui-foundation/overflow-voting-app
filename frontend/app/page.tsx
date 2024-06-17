@@ -25,7 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { z } from "zod"
+import { set, z } from "zod"
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -107,6 +107,8 @@ export default function Page() {
   const [balance, setBalance] = useState<number>(0);
   const [accountLoading, setAccountLoading] = useState<boolean>(true);
 
+  const [votingInProgress, setVotingInProgress] = useState<boolean>(false);
+
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
@@ -136,6 +138,27 @@ export default function Page() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
+
+    toast.promise(vote(values.projects), {
+      loading: "Submitting vote...",
+      success: (data) => {
+        return (
+          <span className="flex flex-row items-center gap-2">
+            Vote submitted successfully!{" "}
+            <a
+              href={`https://suiscan.xyz/testnet/tx/${data.digest}`}
+              target="_blank"
+            >
+              <ExternalLink width={12} />
+            </a>
+          </span>
+        );
+      },
+      error: (error) => {
+        console.error(error);
+        return error.message;
+      },
+    });
   }
 
   const startLogin = async () => {
@@ -249,6 +272,49 @@ export default function Page() {
     console.log(projects)
     setProjects(projects)
 
+  }
+
+  const vote = async (projectIds: number[]) => {
+
+    setVotingInProgress(true);
+
+    const txb = new Transaction
+    const votingProjectIds = txb.makeMoveVec({
+      elements: projectIds.map((projectId) => {
+        let u64 = txb.pure.u64(projectId.toString())
+        console.log('u64', u64)
+        return u64
+      }),
+      type: "u64"
+    });
+
+    console.log('votingProjectIds', votingProjectIds)
+
+    console.log('votes object address', process.env.VOTES_OBJECT_ADDRESS!)
+    console.log('voting module address', process.env.VOTING_MODULE_ADDRESS!)
+
+    txb.moveCall({
+      target: `${process.env.VOTING_MODULE_ADDRESS}::voting::vote`, 
+      arguments: [
+        votingProjectIds, 
+        txb.object(process.env.VOTES_OBJECT_ADDRESS!)
+      ]
+    });
+
+    try {
+      // Sponsor and execute the transaction block, using the Enoki keypair
+      const res = await enokiFlow.sponsorAndExecuteTransaction({
+        transaction: txb,
+        network: "testnet",
+        client,
+      });
+      setVotingInProgress(false);
+
+      return res;
+    } catch (error) {
+      setVotingInProgress(false);
+      throw error;
+    }
   }
 
   if (suiAddress) {

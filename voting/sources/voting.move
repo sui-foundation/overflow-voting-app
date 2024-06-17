@@ -435,8 +435,11 @@ module voting::voting {
     transfer::share_object(votes);
   }
 
-  public fun vote(project_ids: vector<u64>, voter: address, votes: &mut Votes) {
-    assert_user_has_not_voted(voter, votes);
+  public fun vote(project_ids: vector<u64>, votes: &mut Votes, ctx: &TxContext) {
+
+    let voter = ctx.sender();
+
+    // assert_user_has_not_voted(voter, votes);
     assert_valid_project_ids(project_ids, votes);
     assert_voting_is_active(votes);
 
@@ -451,12 +454,12 @@ module voting::voting {
       curr_index = curr_index + 1;
     };
 
-    // Record user's vote
-    table::add(
-      &mut votes.votes, 
-      voter, 
-      project_ids
-    );
+    // // Record user's vote
+    // table::add(
+    //   &mut votes.votes, 
+    //   voter, 
+    //   project_ids
+    // );
   }
 
   public fun toggle_voting(_: &VoterCap, can_vote: bool, votes: &mut Votes) {
