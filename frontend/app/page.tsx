@@ -40,6 +40,13 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Checkbox } from "@/components/ui/checkbox";
 
+type Project = {
+  id: number;
+  name: string;
+  airTableUrl: string;
+  votes: number;
+}
+
 const dummyProjects = [
   {
     id: 0, 
@@ -99,6 +106,12 @@ export default function Page() {
   /* The account information of the current user. */
   const [balance, setBalance] = useState<number>(0);
   const [accountLoading, setAccountLoading] = useState<boolean>(true);
+
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetchProjects()
+  }, [])
 
   /**
    * When the user logs in, fetch the account information.
@@ -209,6 +222,35 @@ export default function Page() {
     });
   };
 
+  const fetchProjects = async () => {
+    const res = await client.getObject({
+      id: process.env.VOTES_OBJECT_ADDRESS!,
+      options: {
+        showContent: true, 
+        // showPreviousTransaction: true
+      }
+    })
+
+    console.log(res)
+
+    if (!res.data || !res.data.content) {
+      return
+    }
+
+    const projects = (res.data.content as any).fields.project_list.map((project: any) => {
+      return { 
+        id: parseInt(project.fields.id), 
+        name: project.fields.name,
+        airTableUrl: project.fields.air_table_url,
+        votes: project.fields.votes
+      }
+    })
+
+    console.log(projects)
+    setProjects(projects)
+
+  }
+
   if (suiAddress) {
     return (
       <div>
@@ -292,31 +334,6 @@ export default function Page() {
             </Card>
           </PopoverContent>
         </Popover>
-        <div className="flex flex-wrap justify-center gap-4">
-          {/* {
-            dummyProjects.map((project, index) => {
-              return (
-                <FormItem className="flex flex-row projects-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Use different settings for my mobile devices
-                    </FormLabel>
-                    <FormDescription>
-                      You can manage your mobile notifications in the{" "}
-                      <Link href="/examples/forms">mobile settings</Link> page.
-                    </FormDescription>
-                  </div>
-                </FormItem>
-              );
-            })
-          } */}
-        </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -331,7 +348,7 @@ export default function Page() {
                     </FormDescription>
                   </div>
                   <div className="flex flex-wrap justify-center gap-4">
-                    {dummyProjects.map((project, index) => (
+                    {projects.map((project, index) => (
                       <FormField
                         key={project.id}
                         control={form.control}
