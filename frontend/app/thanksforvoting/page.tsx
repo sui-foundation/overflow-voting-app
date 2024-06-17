@@ -100,14 +100,14 @@ export default function Page() {
       <div className="flex flex-col items-center">
         <h1 className="text-3xl font-bold">Thanks for voting!</h1>
         <p className="text-lg text-gray-500 text-center">
-          Your vote has been recorded. We'll announce the winners soon!
+          Your vote has been recorded. We&apos;ll announce the winners soon!
         </p>
       </div>
       <Card className="max-w-xs">
         <CardHeader>
           <CardTitle>
             <span>
-              You've been minted a voter NFT!
+              You&apos;ve been minted a voter NFT!
             </span>
             {/* <span>You have been awarded a voter NFT for participating in the vote! The NFT is already been sent to your voting account. 
             You can withdraw it to a personal wallet using the form below.</span> */}
