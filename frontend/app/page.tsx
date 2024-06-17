@@ -96,6 +96,8 @@ export default function Page() {
           projects: []
         })
 
+        window.location.href = "/thanksforvoting";
+
         return (
           <span className="flex flex-row items-center gap-2">
             Vote submitted successfully!{" "}

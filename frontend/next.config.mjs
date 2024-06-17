@@ -7,6 +7,14 @@ const nextConfig = {
     VOTING_MODULE_ADDRESS: process.env.VOTING_MODULE_ADDRESS,
     VOTES_OBJECT_ADDRESS: process.env.VOTES_OBJECT_ADDRESS,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'media.githubusercontent.com',
+      },
+    ],
+  }
 };
 
 export default nextConfig;
