@@ -448,7 +448,7 @@ export default function Page() {
         Use this app to vote for your favorite project in the Overflow hackathon!
         Votes are stored on the Sui network and can be viewed on this page.
       </p>
-      <div className="fixed sm:relative sm:bottom-0 w-full border bottom-4 flex flex-row items-center justify-center">
+      <div className="fixed sm:relative sm:bottom-0 w-full bottom-4 flex flex-row items-center justify-center">
         <Button className="w-60" onClick={startLogin}>Sign in with Google</Button>
       </div>
     </div>
