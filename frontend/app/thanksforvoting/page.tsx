@@ -113,7 +113,15 @@ export default function Page() {
             You can withdraw it to a personal wallet using the form below.</span> */}
           </CardTitle>
           <div className="w-full flex flex-col items-center">
-            <Image src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" className="rounded-2xl" width={200} height={200} alt="" />
+            <Image 
+              src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
+              className="rounded-2xl" 
+              width={200} 
+              height={200} 
+              alt="" 
+              placeholder="blur"
+              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+            />
           </div>
         </CardHeader>
         <CardContent className="flex flex-col w-full gap-2">
@@ -138,6 +146,12 @@ export default function Page() {
           </Button>
         </CardFooter>
       </Card>
+
+      <a href={`https://twitter.com/intent/tweet?text=I%20just%20received%20an%20NFT%20for%20participating%20in%20the%20Sui%20Overflow%20community%20vote!%20${window.location.origin}`}>
+        <Button variant={"outline"} >
+          Share your vote on social media!
+        </Button>
+      </a>
     </div>
   )
 }
