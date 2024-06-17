@@ -13,6 +13,9 @@ import { track } from "@vercel/analytics/react";
 import { ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
+import { ZkSendLinkBuilder } from '@mysten/zksend';
+import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
+
 
 
 export default function Page() {
@@ -25,6 +28,62 @@ export default function Page() {
   const [recipientAddress, setRecipientAddress] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [transferLoading, setTransferLoading] = useState<boolean>(false);
+
+  const requestSui = async () => {
+    track("Request SUI");
+
+    // Ensures the user is logged in and has a SUI address.
+    if (!suiAddress) {
+      throw new Error("No SUI address found");
+    }
+
+    // Request SUI from the faucet.
+    const res = await requestSuiFromFaucetV0({
+      host: getFaucetHost("testnet"),
+      recipient: suiAddress,
+    });
+
+    if (res.error) {
+      throw new Error(res.error);
+    }
+
+    return res;
+  };
+
+  async function generateStashedLink() {
+
+    await requestSui();
+
+    const txb = new Transaction();
+ 
+    const link = new ZkSendLinkBuilder({
+      sender: '0x...',
+    });
+    
+    // link.addClaimableObjectRef(
+    //   txb.object(""),
+    //   `${process.env.VOTING_MODULE_ADDRESS}::your_module::YourType`,
+    // );
+    
+    // Adds the link creation transactions to the transaction
+    link.createSendTransaction({
+      transaction: txb,
+    });
+
+    console.log('link', link.getLink());
+
+    // Get the keypair for the current user.
+    const keypair = await enokiFlow.getKeypair({ network: "testnet" });
+
+    const {bytes, signature} = await txb.sign({ client, signer: keypair });
+ 
+    const res = await client.executeTransactionBlock({
+      transactionBlock: bytes,
+      signature,
+    });
+
+    console.log('res', res);
+  }
 
   async function transferSui() {
     const promise = async () => {
@@ -112,6 +171,19 @@ export default function Page() {
             {/* <span>You have been awarded a voter NFT for participating in the vote! The NFT is already been sent to your voting account. 
             You can withdraw it to a personal wallet using the form below.</span> */}
           </CardTitle>
+          {/* <div className="w-full flex flex-col items-center">
+            <Image 
+              src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
+              className="rounded-2xl" 
+              width={200} 
+              height={200} 
+              alt="" 
+              placeholder="blur"
+              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+            />
+          </div> */}
+        </CardHeader>
+        <CardContent className="flex flex-col w-full gap-2">
           <div className="w-full flex flex-col items-center">
             <Image 
               src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
@@ -123,9 +195,7 @@ export default function Page() {
               blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
             />
           </div>
-        </CardHeader>
-        <CardContent className="flex flex-col w-full gap-2">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
+          {/* <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="recipient">Withdrawal Address (or SuiNS)</Label>
             <Input
               type="text"
@@ -134,15 +204,15 @@ export default function Page() {
               value={recipientAddress}
               onChange={(e) => setRecipientAddress(e.target.value)}
             />
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter className="w-full flex flex-row items-center justify-center">
           <Button
             className="w-full"
-            onClick={transferSui}
-            disabled={transferLoading}
+            onClick={generateStashedLink}
+            disabled
           >
-            Withdraw your NFT
+            Claim your NFT
           </Button>
         </CardFooter>
       </Card>

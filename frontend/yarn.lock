@@ -249,6 +249,14 @@
     "@mysten/sui" "1.1.2"
     "@wallet-standard/core" "1.0.3"
 
+"@mysten/wallet-standard@0.12.9":
+  version "0.12.9"
+  resolved "https://registry.yarnpkg.com/@mysten/wallet-standard/-/wallet-standard-0.12.9.tgz#3155980587a28fbaaff9cfe6bfaadab3735db2b3"
+  integrity sha512-7UDiu11VkA8phWf/EVjZMSQqqQ6KzaZGr5OiqG1RsbrnVmAz3DApNLxHbBiH3rOJZL8CG0c+V6mHlenCVLrSDg==
+  dependencies:
+    "@mysten/sui" "1.1.2"
+    "@wallet-standard/core" "1.0.3"
+
 "@mysten/zklogin@0.7.8":
   version "0.7.8"
   resolved "https://registry.yarnpkg.com/@mysten/zklogin/-/zklogin-0.7.8.tgz#e1a30d49767fa044ebc9122f156066eacde95aef"
@@ -267,6 +275,17 @@
   dependencies:
     "@mysten/sui" "1.1.2"
     "@mysten/wallet-standard" "0.12.8"
+    mitt "^3.0.1"
+    nanostores "^0.9.3"
+    valibot "^0.25.0"
+
+"@mysten/zksend@^0.9.9":
+  version "0.9.9"
+  resolved "https://registry.yarnpkg.com/@mysten/zksend/-/zksend-0.9.9.tgz#1657afdc93ae65833398e10fa7222f17c7f6cadb"
+  integrity sha512-8xUz4Alz4s8c0p36AlHiGzJkiedYK1CjZG5FojEoZY7v3Vu+0nvOIjS9fixCTGlUGHvBKpQuIKuuX3bEl6XESA==
+  dependencies:
+    "@mysten/sui" "1.1.2"
+    "@mysten/wallet-standard" "0.12.9"
     mitt "^3.0.1"
     nanostores "^0.9.3"
     valibot "^0.25.0"
