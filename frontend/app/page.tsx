@@ -5,7 +5,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { useEnokiFlow, useZkLogin } from "@mysten/enoki/react";
 import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
-import { ExternalLink, Github, LoaderCircle, RefreshCw } from "lucide-react";
+import { ExternalLink, Github, Info, LoaderCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,87 +25,73 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-// import { track } from "@vercel/analytics";
+import { z } from "zod"
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Checkbox } from "@/components/ui/checkbox";
 
 const dummyProjects = [
   {
-    name: "Project 1",
-    description: "This is a description of project 1",
-    votes: 0,
+    id: 0, 
+    name: "Aalps Protocol",
+    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh", 
+    votes: 0
   },
   {
-    name: "Project 2",
-    description: "This is a description of project 2",
-    votes: 0,
+    id: 1, 
+    name: "AdCommand",
+    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recd95WbIXs5qiLmM",
+    votes: 0
   },
   {
-    name: "Project 3",
-    description: "This is a description of project 3",
-    votes: 0,
+    id: 2,
+    name: "Aeon",
+    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recJHliYSNdxFXdCB",
+    votes: 0
   },
   {
-    name: "Project 4",
-    description: "This is a description of project 4",
-    votes: 0,
+    id: 3,
+    name: "Aalps Protocol",
+    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh",
+    votes: 0
   },
   {
-    name: "Project 5",
-    description: "This is a description of project 5",
-    votes: 0,
-  },
-  {
-    name: "Project 6",
-    description: "This is a description of project 6",
-    votes: 0,
-  },
-  {
-    name: "Project 7",
-    description: "This is a description of project 7",
-    votes: 0,
-  },
-  {
-    name: "Project 8",
-    description: "This is a description of project 8",
-    votes: 0,
-  },
-  {
-    name: "Project 9",
-    description: "This is a description of project 9",
-    votes: 0,
-  },
-  {
-    name: "Project 10",
-    description: "This is a description of project 10",
-    votes: 0,
-  },
-  {
-    name: "Project 11",
-    description: "This is a description of project 11",
-    votes: 0,
-  },
-  {
-    name: "Project 12",
-    description: "This is a description of project 12",
-    votes: 0,
-  },
-  {
-    name: "Project 13",
-    description: "This is a description of project 13",
-    votes: 0,
-  },
-  {
-    name: "Project 14",
-    description: "This is a description of project 14",
-    votes: 0,
-  },
-  {
-    name: "Project 15",
-    description: "This is a description of project 15",
-    votes: 0,
+    id: 4,
+    name: "Aalps Protocol",
+    airTableUrl: "https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recI6k3PRC0113wDh",
+    votes: 0
   },
 ];
 
+const FormSchema = z.object({
+  projects: z.array(z.number())
+  .nonempty({
+    message: "Please select at least one project",
+  })
+  .max(3, {
+    message: "You can only select up to 3 projects",
+  })
+})
+
 export default function Page() {
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      projects: [],
+    },
+  })
+
   const client = useSuiClient(); // The SuiClient instance
   const enokiFlow = useEnokiFlow(); // The EnokiFlow instance
   const { address: suiAddress } = useZkLogin(); // The zkLogin instance
@@ -120,8 +106,24 @@ export default function Page() {
   useEffect(() => {
     if (suiAddress) {
       getAccountInfo();
+      enokiFlow.getProof({
+        network: "testnet"
+      }).then((proof) => {
+        console.log('proof', proof)
+      })
+
+      enokiFlow.getSession().then((session) => {
+        console.log('session', session)
+      })
     }
   }, [suiAddress]);
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof FormSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
+  }
 
   const startLogin = async () => {
     const promise = async () => {
@@ -240,12 +242,12 @@ export default function Page() {
               </CardHeader>
               <CardContent>
                 {accountLoading ? (
-                  <div className="w-full flex flex-col items-center">
+                  <div className="w-full flex flex-col projects-center">
                     <LoaderCircle className="animate-spin" />
                   </div>
                 ) : (
                   <>
-                    <div className="flex flex-row gap-1 items-center">
+                    <div className="flex flex-row gap-1 projects-center">
                       <span>Address: </span>
                       {accountLoading ? (
                         <LoaderCircle className="animate-spin" />
@@ -271,7 +273,7 @@ export default function Page() {
                   </>
                 )}
               </CardContent>
-              <CardFooter className="flex flex-row gap-2 items-center justify-between">
+              <CardFooter className="flex flex-row gap-2 projects-center justify-between">
                 <Button variant={"outline"} size={"sm"} onClick={onRequestSui}>
                   Request SUI
                 </Button>
@@ -291,31 +293,94 @@ export default function Page() {
           </PopoverContent>
         </Popover>
         <div className="flex flex-wrap justify-center gap-4">
-          {
+          {/* {
             dummyProjects.map((project, index) => {
               return (
-                <Card key={index} className="w-md">
-                  <CardHeader>
-                    <CardTitle>{project.name}</CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-row items-center justify-between">
-                      <span>Votes: {project.votes}</span>
-                      <Button variant={"outline"} size={"sm"}>Vote</Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <FormItem className="flex flex-row projects-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Use different settings for my mobile devices
+                    </FormLabel>
+                    <FormDescription>
+                      You can manage your mobile notifications in the{" "}
+                      <Link href="/examples/forms">mobile settings</Link> page.
+                    </FormDescription>
+                  </div>
+                </FormItem>
               );
             })
-          }
+          } */}
         </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="projects"
+              render={() => (
+                <FormItem>
+                  <div className="mb-4">
+                    <FormLabel className="text-base">Projects</FormLabel>
+                    <FormDescription>
+                      Select the projects you want to display in the sidebar.
+                    </FormDescription>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {dummyProjects.map((project, index) => (
+                      <FormField
+                        key={project.id}
+                        control={form.control}
+                        name="projects"
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={project.id}
+                              className="flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(project.id)}
+                                  onCheckedChange={(checked) => {
+                                    return checked
+                                      ? field.onChange([...field.value, project.id])
+                                      : field.onChange(
+                                          field.value?.filter(
+                                            (value) => value !== project.id
+                                          )
+                                        )
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                {project.name}
+                              </FormLabel>
+                              <a href={project.airTableUrl} target="_blank">
+                                <ExternalLink className="w-4" />
+                              </a>
+                            </FormItem>
+                          )
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-start">
+    <div className="flex flex-col projects-center justify-start">
       <a
         href="https://github.com/dantheman8300/enoki-example-app"
         target="_blank"
