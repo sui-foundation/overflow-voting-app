@@ -5,10 +5,18 @@ import { Transaction } from "@mysten/sui/transactions";
 import { useSuiClient } from "@mysten/dapp-kit";
 import { useEnokiFlow, useZkLogin } from "@mysten/enoki/react";
 import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
-import { BadgeInfo, ExternalLink, Github, Info, LoaderCircle, LogOut, RefreshCw } from "lucide-react";
+import {
+  BadgeInfo,
+  ExternalLink,
+  Github,
+  Info,
+  LoaderCircle,
+  LogOut,
+  RefreshCw,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OverflowBanner from "@/public/bannerv2.png";
-import SuiLogo from "@/public/Sui_Logo_White.png"
+import SuiLogo from "@/public/Sui_Logo_White.png";
 import {
   Card,
   CardContent,
@@ -27,7 +35,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { set, z } from "zod"
+import { set, z } from "zod";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -37,9 +45,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 
@@ -48,26 +56,26 @@ type Project = {
   name: string;
   airTableUrl: string;
   votes: number;
-}
+};
 
 const FormSchema = z.object({
-  projects: z.array(z.number())
-  .nonempty({
-    message: "Please select at least one project",
-  })
-  .max(3, {
-    message: "You can only select up to 3 projects",
-  })
-})
+  projects: z
+    .array(z.number())
+    .nonempty({
+      message: "Please select at least one project",
+    })
+    .max(3, {
+      message: "You can only select up to 3 projects",
+    }),
+});
 
 export default function Page() {
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       projects: [],
     },
-  })
+  });
 
   const client = useSuiClient(); // The SuiClient instance
   const enokiFlow = useEnokiFlow(); // The EnokiFlow instance
@@ -78,19 +86,21 @@ export default function Page() {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    fetchProjects()
-  }, [])
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     if (suiAddress) {
-      enokiFlow.getProof({
-        network: "testnet"
-      }).then((proof) => {
-        console.log("Proof", proof);
-      });
+      enokiFlow
+        .getProof({
+          network: "testnet",
+        })
+        .then((proof) => {
+          console.log("Proof", proof);
+        });
       enokiFlow.getSession().then((session) => {
-        console.log('session', session)
-      })
+        console.log("session", session);
+      });
     }
   }, [suiAddress]);
 
@@ -98,21 +108,25 @@ export default function Page() {
   function onSubmit(values: z.infer<typeof FormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    console.log(values);
 
     toast.promise(vote(values.projects), {
       loading: "Submitting vote...",
       success: async (data) => {
-
-        console.log(data)
+        console.log(data);
 
         await fetchProjects();
 
-        localStorage.setItem('votedProjects', values.projects.map((projectId) => projects[projectId].name).join(';;'));
+        localStorage.setItem(
+          "votedProjects",
+          values.projects
+            .map((projectId) => projects[projectId].name)
+            .join(";;")
+        );
 
         form.reset({
-          projects: []
-        })
+          projects: [],
+        });
 
         window.location.href = "/thanksforvoting";
 
@@ -137,7 +151,6 @@ export default function Page() {
 
   const startLogin = async () => {
     const promise = async () => {
-      
       window.location.href = await enokiFlow.createAuthorizationURL({
         provider: "google",
         clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -155,60 +168,60 @@ export default function Page() {
     const res = await client.getObject({
       id: process.env.VOTES_OBJECT_ADDRESS!,
       options: {
-        showContent: true, 
+        showContent: true,
         // showPreviousTransaction: true
-      }
-    })
-
-    console.log(res)
-
-    if (!res.data || !res.data.content) {
-      return
-    }
-
-    const projects = (res.data.content as any).fields.project_list.map((project: any) => {
-      return { 
-        id: parseInt(project.fields.id), 
-        name: project.fields.name,
-        airTableUrl: project.fields.air_table_url,
-        votes: project.fields.votes
-      }
-    })
-
-    console.log(projects)
-    setProjects(projects)
-
-  }
-
-  const vote = async (projectIds: number[]) => {
-
-    setVotingInProgress(true);
-
-    const txb = new Transaction
-    const votingProjectIds = txb.makeMoveVec({
-      elements: projectIds.map((projectId) => {
-        let u64 = txb.pure.u64(projectId.toString())
-        console.log('u64', u64)
-        return u64
-      }),
-      type: "u64"
+      },
     });
 
-    console.log('votingProjectIds', votingProjectIds)
+    console.log(res);
 
-    console.log('votes object address', process.env.VOTES_OBJECT_ADDRESS!)
-    console.log('voting module address', process.env.VOTING_MODULE_ADDRESS!)
+    if (!res.data || !res.data.content) {
+      return;
+    }
+
+    const projects = (res.data.content as any).fields.project_list.map(
+      (project: any) => {
+        return {
+          id: parseInt(project.fields.id),
+          name: project.fields.name,
+          airTableUrl: project.fields.air_table_url,
+          votes: project.fields.votes,
+        };
+      }
+    );
+
+    console.log(projects);
+    setProjects(projects);
+  };
+
+  const vote = async (projectIds: number[]) => {
+    setVotingInProgress(true);
+
+    const txb = new Transaction();
+    const votingProjectIds = txb.makeMoveVec({
+      elements: projectIds.map((projectId) => {
+        let u64 = txb.pure.u64(projectId.toString());
+        console.log("u64", u64);
+        return u64;
+      }),
+      type: "u64",
+    });
+
+    console.log("votingProjectIds", votingProjectIds);
+
+    console.log("votes object address", process.env.VOTES_OBJECT_ADDRESS!);
+    console.log("voting module address", process.env.VOTING_MODULE_ADDRESS!);
     const { addressSeed } = await enokiFlow.getProof({
-      network: "testnet"
-    })
+      network: "testnet",
+    });
 
     txb.moveCall({
-      target: `${process.env.VOTING_MODULE_ADDRESS}::voting::vote`, 
+      target: `${process.env.VOTING_MODULE_ADDRESS}::voting::vote`,
       arguments: [
-        votingProjectIds, 
+        votingProjectIds,
         txb.object(process.env.VOTES_OBJECT_ADDRESS!),
         txb.pure.u256(addressSeed),
-      ]
+      ],
     });
 
     try {
@@ -225,14 +238,19 @@ export default function Page() {
       setVotingInProgress(false);
       throw error;
     }
-  }
+  };
 
   if (suiAddress) {
     return (
       <div>
-        <h1 className="text-4xl font-medium m-4 tracking-tighter">Sui Overflow Hackathon - Community Vote</h1>        
+        <h1 className="text-4xl font-medium m-4 tracking-tighter">
+          Sui Overflow: Community Favorite Award Voting
+        </h1>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-16">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 pb-16"
+          >
             <FormField
               control={form.control}
               name="projects"
@@ -242,11 +260,39 @@ export default function Page() {
                     <FormLabel className="text-base">How to vote: </FormLabel>
                     <FormDescription>
                       <ul className="list-disc list-inside">
-                        <li>View project gallery <a href="https://go.sui.io/overflow-community-showcase" target="_blank" className="underline text-sky">here</a></li>
-                        <li>Click the info icon for individual project details</li>
-                        <li>Click the checkbox to vote for a project</li>
-                        <li>You can vote for up to 3 projects</li>
-                        <li>Click the submit button to submit your vote</li>
+                        <li>
+                          View the{" "}
+                          <a
+                            href="https://go.sui.io/overflow-community-showcase"
+                            target="_blank"
+                            className="underline text-sky"
+                          >
+                            project gallery
+                          </a>{" "}
+                          of all the Sui Overflow shortlisted projects and watch
+                          the project demos:{" "}
+                          <a
+                            href="https://www.youtube.com/live/o8iwoRRsBu8"
+                            target="_blank"
+                            className="underline text-[#4da2ff]"
+                          >
+                            Day #1
+                          </a>{" "}
+                          |{" "}
+                          <a
+                            href="https://www.youtube.com/live/H27LvUvPyQk"
+                            target="_blank"
+                            className="underline text-[#4da2ff]"
+                          >
+                            Day #2
+                          </a>
+                        </li>
+                        <li>
+                          Click the info icon next to the project names below for the project details
+                        </li>
+                        <li>Click the checkbox to select a project for voting</li>
+                        <li>You can select up to 3 projects</li>
+                        <li>Click the submit button to submit your vote - you can only submit your votes once</li>
                       </ul>
                       {/* Click the info icon to view the details of each project and vote for up to your top 3 favorite projects. Note, you can only vote once!  */}
                     </FormDescription>
@@ -263,21 +309,31 @@ export default function Page() {
                               key={project.id}
                               className={
                                 "flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center w-full sm:w-96 cursor-pointer" +
-                                `${index % 2 === 0 ? " bg-[#f9f9f9]" : " bg-[#f0f0f0]"}`
+                                `${
+                                  index % 2 === 0
+                                    ? " bg-[#f9f9f9]"
+                                    : " bg-[#f0f0f0]"
+                                }`
                               }
                             >
                               <FormControl>
                                 <Checkbox
                                   checked={field.value?.includes(project.id)}
-                                  disabled={field.value?.length === 3 && !field.value?.includes(project.id)}
+                                  disabled={
+                                    field.value?.length === 3 &&
+                                    !field.value?.includes(project.id)
+                                  }
                                   onCheckedChange={(checked) => {
                                     return checked
-                                      ? field.onChange([...field.value, project.id])
+                                      ? field.onChange([
+                                          ...field.value,
+                                          project.id,
+                                        ])
                                       : field.onChange(
                                           field.value?.filter(
                                             (value) => value !== project.id
                                           )
-                                        )
+                                        );
                                   }}
                                 />
                               </FormControl>
@@ -288,12 +344,19 @@ export default function Page() {
                                 <BadgeInfo className="w-4 text-sky" />
                               </a>
                             </FormItem>
-                          )
+                          );
                         }}
                       />
                     ))}
                   </div>
-                  <div style={{WebkitBackdropFilter: "blur(4px)", backdropFilter: "blur(4px)", opacity: 10}} className="fixed border-t p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
+                  <div
+                    style={{
+                      WebkitBackdropFilter: "blur(4px)",
+                      backdropFilter: "blur(4px)",
+                      opacity: 10,
+                    }}
+                    className="fixed border-t p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full"
+                  >
                     <Button
                       className="rotate-180"
                       variant={"ghost"}
@@ -308,13 +371,14 @@ export default function Page() {
                     <Button
                       type="submit"
                       disabled={votingInProgress || !form.formState.isValid}
-                    >Submit</Button>
+                    >
+                      Submit
+                    </Button>
                     {/* <FormMessage /> */}
                   </div>
                 </FormItem>
               )}
             />
-            
           </form>
         </Form>
       </div>
@@ -323,22 +387,62 @@ export default function Page() {
 
   return (
     <div className="flex flex-col items-center justify-start">
-      <Image src={OverflowBanner} alt="" className=" w-full max-w-screen-md pt-4 px-4" />
+      <Image
+        src={OverflowBanner}
+        alt=""
+        className=" w-full max-w-screen-md pt-4 px-4"
+      />
       <p className="text-md m-4 text-deep-ocean w-full max-w-prose p-4">
-        Use this app to vote for your favorite project in the Overflow hackathon!
-        Votes are stored on the Sui network and results will be announced at the end of the voting period.
+        Use this app to vote for your favorite project in the Sui Overflow
+        hackathon! Votes are stored on the Sui network and results will be
+        announced at the end of the voting period. The top 10 projects that
+        receive the most votes will win the Community Favorite Award.
         <br />
         <br />
-        Watch the Overflow Project demos here: 
+        View the{" "}
+        <a href="https://go.sui.io/overflow-community-showcase" target="_blank">
+          project gallery
+        </a>{" "}
+        of all the Sui Overflow shortlisted projects and watch the project
+        demos:
         <br />
-        <a href="https://www.youtube.com/live/o8iwoRRsBu8" target="_blank" className="underline text-[#4da2ff]">Day #1</a> | <a href="https://www.youtube.com/live/H27LvUvPyQk" target="_blank" className="underline text-[#4da2ff]">Day #2</a>
+        <div className="flex flex-col items-center w-full">
+          <div>
+            <a
+              href="https://www.youtube.com/live/o8iwoRRsBu8"
+              target="_blank"
+              className="underline text-[#4da2ff]"
+            >
+              Day #1
+            </a>{" "}
+            |{" "}
+            <a
+              href="https://www.youtube.com/live/H27LvUvPyQk"
+              target="_blank"
+              className="underline text-[#4da2ff]"
+            >
+              Day #2
+            </a>
+          </div>
+        </div>
         <br />
         <br />
-        This app was built using the Sui TS SDK. This app demostrates the ease of building a decentralized application with production grade security and user experience. 
-        Check out the source code <a href="https://github.com/sui-foundation/overflow-voting-app" target="_blank" className="underline text-[#4da2ff]">here</a>. 
+        This app was built using the Sui TS SDK. This app demostrates the ease
+        of building a decentralized application with production grade security
+        and user experience. Check out the source code{" "}
+        <a
+          href="https://github.com/sui-foundation/overflow-voting-app"
+          target="_blank"
+          className="underline text-[#4da2ff]"
+        >
+          here
+        </a>
+        .
       </p>
       <div className="fixed sm:relative sm:bottom-0 w-full bottom-4 flex flex-row items-center justify-center">
-        <Button className="w-60 text-[#ffffff]" onClick={startLogin}>Sign in with Google</Button>
+        <Button className="w-60 text-[#ffffff]" onClick={startLogin}>
+          Sign in with Google
+        </Button>
       </div>
     </div>
   );
