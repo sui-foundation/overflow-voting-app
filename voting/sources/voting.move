@@ -8,6 +8,10 @@ module voting::voting {
   use sui::zklogin_verified_issuer::check_zklogin_issuer;
 
   const EInvalidProof: u64 = 1;
+  const EUserAlreadyVoted: u64 = 2;
+  const ETooManyVotes: u64 = 3;
+  const EInvalidProjectId: u64 = 4;
+  const EVotingInactive: u64 = 5;
 
   public struct Votes has key {
     id: UID, 
@@ -30,7 +34,7 @@ module voting::voting {
     votes: u64
   }
 
-  public struct VoterCap has key, store {
+  public struct AdminCap has key, store {
     id: UID
   }
 
@@ -433,8 +437,14 @@ module voting::voting {
       votes: table::new(ctx),
       voting_active: true
     };
-
     transfer::share_object(votes);
+
+    transfer::transfer(
+      AdminCap {
+        id: object::new(ctx)
+      }, 
+      ctx.sender()
+    );
   }
 
   public fun vote(project_ids: vector<u64>, votes: &mut Votes, address_seed: u256, ctx: &TxContext) {
@@ -466,7 +476,7 @@ module voting::voting {
     // );
   }
 
-  public fun toggle_voting(_: &VoterCap, can_vote: bool, votes: &mut Votes) {
+  public entry fun toggle_voting(_: &AdminCap, can_vote: bool, votes: &mut Votes) {
     votes.voting_active = can_vote;
   }
 
@@ -476,14 +486,14 @@ module voting::voting {
         &votes.votes, 
         user
       ) == false, 
-      0
+      EUserAlreadyVoted
     );
   }
 
   fun assert_valid_project_ids(project_ids: vector<u64>, votes: &Votes) {
     assert!(
       project_ids.length() <= 3, 
-      0
+      ETooManyVotes
     );
     
     let mut curr_index = 0;
@@ -491,7 +501,7 @@ module voting::voting {
     while (curr_index < project_ids.length()) {
       assert!(
         project_ids[curr_index] < votes.project_list.length(),
-        0
+        EInvalidProjectId
       );
       vec_map::insert(&mut ids, project_ids[curr_index], 0); // this will abort if there is a dup
       curr_index = curr_index + 1;
@@ -501,7 +511,7 @@ module voting::voting {
   fun assert_voting_is_active(votes: &Votes) {
     assert!(
       votes.voting_active, 
-      0
+      EVotingInactive
     );
   }
 
