@@ -16,6 +16,7 @@ import Image from "next/image";
 import { ZkSendLinkBuilder } from '@mysten/zksend';
 import { getFaucetHost, requestSuiFromFaucetV0 } from "@mysten/sui/faucet";
 import { IconBrandX } from '@tabler/icons-react';
+import FUD from "@/public/plotting.webp"
 
 
 
@@ -163,58 +164,8 @@ export default function Page() {
           Your vote has been recorded. We&apos;ll announce the winners soon!
         </p>
       </div>
-      <Card className="max-w-xs">
-        <CardHeader>
-          <CardTitle className="text-center text-deep-ocean tracking-tighter">
-            You&apos;ve been given a voter NFT!
-            {/* <span>You have been awarded a voter NFT for participating in the vote! The NFT is already been sent to your voting account. 
-            You can withdraw it to a personal wallet using the form below.</span> */}
-          </CardTitle>
-          {/* <div className="w-full flex flex-col items-center">
-            <Image 
-              src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
-              className="rounded-2xl" 
-              width={200} 
-              height={200} 
-              alt="" 
-              placeholder="blur"
-              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-            />
-          </div> */}
-        </CardHeader>
-        <CardContent className="flex flex-col w-full gap-2">
-          <div className="w-full flex flex-col items-center rounded-l blur-lg">
-            <Image 
-              src="https://media.githubusercontent.com/media/sui-foundation/attendance-nft/main/gifs/overflow-submission.gif" 
-              // className="rounded-2xl" 
-              width={200} 
-              height={200} 
-              alt="" 
-              placeholder="blur"
-              blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-            />
-          </div>
-          {/* <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="recipient">Withdrawal Address (or SuiNS)</Label>
-            <Input
-              type="text"
-              id="recipient"
-              placeholder="0xdeadbeef"
-              value={recipientAddress}
-              onChange={(e) => setRecipientAddress(e.target.value)}
-            />
-          </div> */}
-        </CardContent>
-        <CardFooter className="w-full flex flex-row items-center justify-center">
-          <Button
-            className="w-full"
-            onClick={generateStashedLink}
-            // disabled
-          >
-            Mint
-          </Button>
-        </CardFooter>
-      </Card>
+      
+      <Image className="rounded-2xl" src={FUD} alt="FUD" width={300} height={300} />
 
       <a href={`https://twitter.com/intent/tweet?text=I%20just%20received%20an%20NFT%20for%20participating%20in%20the%20Sui%20Overflow%20community%20vote!%20https://overflow-voting-app-git-main-sui-foundation.vercel.app/`}>
         <Button variant={"outline"} >
