@@ -275,7 +275,7 @@ export default function Page() {
                                 />
                               </FormControl>
                               <FormLabel className="font-normal">
-                                {project.name} ({project.votes} votes)
+                                {project.name}
                               </FormLabel>
                               <a href={project.airTableUrl} target="_blank">
                                 <BadgeInfo className="w-4 text-sky" />
