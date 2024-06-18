@@ -108,6 +108,8 @@ export default function Page() {
 
         await fetchProjects();
 
+        localStorage.setItem('votedProjects', values.projects.map((projectId) => projects[projectId].name).join(';;'));
+
         form.reset({
           projects: []
         })
