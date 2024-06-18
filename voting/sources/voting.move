@@ -254,185 +254,192 @@ module voting::voting {
           votes: 0
         },
         Project {
-          id: 35, 
+          id: 35,
+          name: b"Promise".to_string(),
+          air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recvPpoJ7S4a6HcSv"),
+          votes: 0
+        },
+        Project {
+          id: 36, 
           name: b"Pump Up".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/reckEQHRGv0PBS59U"),
           votes: 0
         },
         Project {
-          id: 36, 
+          id: 37, 
           name: b"Scam NFT detector".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recZrGwhqB9G0n8JQ"),
           votes: 0
         },
         Project {
-          id: 37, 
+          id: 38, 
           name: b"Shall We Move".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recrywtw02M5hv8O9"),
           votes: 0
         },
         Project {
-          id: 38, 
+          id: 39, 
           name: b"Shio".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recmgC1zo9IOpAN5w"),
           votes: 0
         },
         Project {
-          id: 39, 
+          id: 40, 
           name: b"Sight".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/receaWpp3ioi9i0v3"),
           votes: 0
         },
         Project {
-          id: 40, 
+          id: 41, 
           name: b"Stashdrop".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recdSD9K7cJJpuMSJ"),
           votes: 0
         },
         Project {
-          id: 41, 
+          id: 42, 
           name: b"Stoked Finance".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recgIl4rt4WHly2KI"),
           votes: 0
         },
         Project {
-          id: 42, 
+          id: 43, 
           name: b"stream.gift".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/reciwLIeAnDPYP3Re"),
           votes: 0
         },
         Project {
-          id: 43, 
+          id: 44, 
           name: b"Su Protocol".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recljFHxXfqoXm3iy"),
           votes: 0
         },
         Project {
-          id: 44, 
+          id: 45, 
           name: b"Sui dApp Starter".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recSc0FFQKTUMRnVP"),
           votes: 0
         },
         Project {
-          id: 45, 
+          id: 46, 
           name: b"Sui Metadata".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recyoA0rNYXWEgR9D"),
           votes: 0
         },
         Project {
-          id: 46, 
+          id: 47, 
           name: b"Sui simulator".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recZEsvZjI6WPymp0"),
           votes: 0
         },
         Project {
-          id: 47, 
+          id: 48, 
           name: b"sui-wormhole-native-token-transfer".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recCUvcinQxZDrqPH"),
           votes: 0
         },
         Project {
-          id: 48, 
+          id: 49, 
           name: b"SuiAutochess".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recFfGGW7lj69skWu"),
           votes: 0
         },
         Project {
-          id: 49, 
+          id: 50, 
           name: b"SuiFund".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recSqeDr8i1isZSeW"),
           votes: 0
         },
         Project {
-          id: 50, 
+          id: 51, 
           name: b"SuiGPT".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recxqubMauRZEnM08"),
           votes: 0
         },
         Project {
-          id: 51, 
+          id: 52, 
           name: b"SuiMate".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recBmhSGqbeh0wbHz"),
           votes: 0
         },
         Project {
-          id: 52, 
+          id: 53, 
           name: b"Suinfra – RPC Metrics Dashboard & Geo-Aware RPC Endpoint".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recPnt2C1pUf7wA67"),
           votes: 0
         },
         Project {
-          id: 53, 
+          id: 54, 
           name: b"SuiPass".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recJtsRwUqgYDUVRx"),
           votes: 0
         },
         Project {
-          id: 54, 
+          id: 55, 
           name: b"SuiSec Toolkit".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recwJ8YLkGYs9uaQY"),
           votes: 0
         },
         Project {
-          id: 55, 
+          id: 56, 
           name: b"SuiWeb".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/reckOMVr5hHVCKQ5V"),
           votes: 0
         },
         Project {
-          id: 56, 
+          id: 57, 
           name: b"Summon Attack".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recnfbfOpSf15xmbB"),
           votes: 0
         },
         Project {
-          id: 57, 
+          id: 58, 
           name: b"The Wanderer".to_string(), 
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recamukcsSBjjcLBH"),
           votes: 0
         },
         Project {
-          id: 58, 
+          id: 59, 
           name: b"Trippple".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/rec1rXKOir9Zsk4LF"),
           votes: 0
         },
         Project {
-          id: 59, 
+          id: 60, 
           name: b"Wagmi Kitchen".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/reck0jOTWX9IbLDj0"),
           votes: 0
         },
         Project {
-          id: 60, 
+          id: 61, 
           name: b"Wave Wallet".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recXVLwFaHcnjJx8e"),
           votes: 0
         },
         Project {
-          id: 61, 
+          id: 62, 
           name: b"WebAuthn on SUI".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recD2ObsLZiblm1Dd"),
           votes: 0
         },
         Project {
-          id: 62, 
+          id: 63, 
           name: b"Wecastle".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recJ7NgQTZBa8B7Rw"),
           votes: 0
         },
         Project {
-          id: 63, 
+          id: 64, 
           name: b"wormhole-kit".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recN7oF15sUwAaSGi"),
           votes: 0
         },
         Project {
-          id: 64, 
+          id: 65, 
           name: b"zk Reputation".to_string(),
           air_table_url: url::new_unsafe_from_bytes(b"https://airtable.com/appInEqjBZ2YxoHgS/shrmgnQKAXwCnv4NY/tblJaA1KCQXwgcHtU/viwsKAEf1fDL8T6cS/recUDylUiyWglTJaP"),
           votes: 0
         },
+        
       ],
       votes: table::new(ctx),
       voting_active: true
