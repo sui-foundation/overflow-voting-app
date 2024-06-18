@@ -16,7 +16,7 @@ export default function ShareButton() {
         return `%0A-%20${project}`;
       })
       .join("");
-    const link = `https://twitter.com/intent/tweet?text=I%20just%20voted%20for%20my%20favorite%20Overflow%20projects%21%0A${projectLinkInsert}%0A%0AGo%20vote%20at%3A%20https%3A%2F%2Foverflow-voting-app-git-main-sui-foundation.vercel.app%2F`;
+    const link = `https://twitter.com/intent/tweet?text=I%20just%20voted%20for%20my%20favorite%20Overflow%20projects%21${projectLinkInsert}%0A%0ASubmit%20your%20votes%20for%20the%20Community%20Favorite%20Award%3A%20https%3A%2F%2Foverflow-voting-app-git-main-sui-foundation.vercel.app%2F`;
     setLink(link);
   }, []);
 
