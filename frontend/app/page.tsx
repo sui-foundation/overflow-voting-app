@@ -258,7 +258,10 @@ export default function Page() {
                           return (
                             <FormItem
                               key={project.id}
-                              className="flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center w-full sm:w-96 cursor-pointer"
+                              className={
+                                "flex flex-row projects-start space-x-3 space-y-0 border p-4 rounded-md items-center w-full sm:w-96 cursor-pointer" +
+                                `${index % 2 === 0 ? " bg-[#f9f9f9]" : " bg-[#f0f0f0]"}`
+                              }
                             >
                               <FormControl>
                                 <Checkbox
