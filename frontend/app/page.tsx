@@ -240,7 +240,8 @@ export default function Page() {
                     <FormLabel className="text-base">How to vote: </FormLabel>
                     <FormDescription>
                       <ul className="list-disc list-inside">
-                        <li>Click the info icon for view project details</li>
+                        <li>View project gallery <a href="https://go.sui.io/overflow-community-showcase" className="underline text-sky">here</a></li>
+                        <li>Click the info icon for individual project details</li>
                         <li>Click the checkbox to vote for a project</li>
                         <li>You can vote for up to 3 projects</li>
                         <li>Click the submit button to submit your vote</li>
