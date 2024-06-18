@@ -450,7 +450,7 @@ export default function Page() {
         <br />
         <br />
         View the{" "}
-        <a href="https://go.sui.io/overflow-community-showcase" target="_blank">
+        <a href="https://go.sui.io/overflow-community-showcase" target="_blank" className="underline text-sky">
           project gallery
         </a>{" "}
         of all the Sui Overflow shortlisted projects and watch the project
