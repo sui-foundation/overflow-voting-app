@@ -228,18 +228,7 @@ export default function Page() {
   if (suiAddress) {
     return (
       <div>
-        <h1 className="text-4xl font-medium m-4 tracking-tighter">Overflow Voting</h1>
-        <Button
-          className="absolute top-4 right-4"
-          variant={"ghost"}
-          size={"icon"}
-          onClick={async () => {
-            await enokiFlow.logout();
-            window.location.reload();
-          }}
-        >
-          <LogOut className="w-6 text-red-500" />
-        </Button>
+        <h1 className="text-4xl font-medium m-4 tracking-tighter">Sui Overflow Hackathon - Community Vote</h1>        
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-16">
             <FormField
