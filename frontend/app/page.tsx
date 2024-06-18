@@ -237,9 +237,15 @@ export default function Page() {
               render={() => (
                 <FormItem>
                   <div className="mb-4 px-4">
-                    <FormLabel className="text-base">Vote for your favorite projects!</FormLabel>
+                    <FormLabel className="text-base">How to vote: </FormLabel>
                     <FormDescription>
-                      Click the info icon to view the details of each project and vote for up to your top 3 favorite projects. Note, you can only vote once! 
+                      <ul className="list-disc list-inside">
+                        <li>Click the info icon for view project details</li>
+                        <li>Click the checkbox to vote for a project</li>
+                        <li>You can vote for up to 3 projects</li>
+                        <li>Click the submit button to submit your vote</li>
+                      </ul>
+                      {/* Click the info icon to view the details of each project and vote for up to your top 3 favorite projects. Note, you can only vote once!  */}
                     </FormDescription>
                   </div>
                   <div className="flex flex-wrap justify-center gap-4 px-4">
