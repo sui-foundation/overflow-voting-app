@@ -429,7 +429,7 @@ export default function Page() {
         <br />
         This app was built using the Sui TS SDK. This app demostrates the ease
         of building a decentralized application with production grade security
-        and user experience. Check out the source code{" "}
+        and user experience on Sui. Check out the source code{" "}
         <a
           href="https://github.com/sui-foundation/overflow-voting-app"
           target="_blank"
