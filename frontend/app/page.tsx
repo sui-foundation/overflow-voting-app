@@ -263,6 +263,7 @@ export default function Page() {
                               <FormControl>
                                 <Checkbox
                                   checked={field.value?.includes(project.id)}
+                                  disabled={field.value?.length === 3 && !field.value?.includes(project.id)}
                                   onCheckedChange={(checked) => {
                                     return checked
                                       ? field.onChange([...field.value, project.id])
@@ -287,8 +288,22 @@ export default function Page() {
                     ))}
                   </div>
                   <div style={{WebkitBackdropFilter: "blur(4px)", backdropFilter: "blur(4px)", opacity: 10}} className="fixed border-t p-4 bottom-0 z-10 h-12 flex flex-row items-center justify-between w-full">
-                    <Button type="submit">Submit</Button>
-                    <FormMessage />
+                    <Button
+                      className="rotate-180"
+                      variant={"ghost"}
+                      size={"icon"}
+                      onClick={async () => {
+                        await enokiFlow.logout();
+                        window.location.reload();
+                      }}
+                    >
+                      <LogOut className="w-6 text-red-500" />
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={votingInProgress || !form.formState.isValid}
+                    >Submit</Button>
+                    {/* <FormMessage /> */}
                   </div>
                 </FormItem>
               )}
