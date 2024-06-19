@@ -213,8 +213,19 @@ export default function Page() {
         );
       },
       error: (error) => {
-        console.error(error);
-        return error.message;
+        console.log('error', error);
+
+        if (error.errors.length === 0) {
+          return 'An error occurred. Please try again later.'
+        }
+
+        if (error.errors[0].message.includes("assert_voting_is_active")) {
+          return "Voting is not active at the moment. Please try again later.";
+        } else if (error.errors[0].message.includes('assert_user_has_not_voted')) {
+          return "You have already voted. You can only vote once.";
+        } 
+
+        return 'An error occurred. Please try again later.'
       },
     });
   }
