@@ -442,7 +442,7 @@ export default function Page() {
         alt=""
         className=" w-full max-w-screen-md pt-4 px-4"
       />
-      <p className="text-md m-4 text-deep-ocean w-full max-w-prose p-4">
+      <div className="text-md m-4 text-deep-ocean w-full max-w-prose p-4">
         Use this app to vote for your favorite project in the Sui Overflow
         hackathon! Votes are stored on the Sui network and results will be
         announced at the end of the voting period. The top 10 projects that
@@ -488,7 +488,7 @@ export default function Page() {
           here
         </a>
         .
-      </p>
+      </div>
       <div className="fixed sm:relative sm:bottom-0 w-full bottom-4 flex flex-row items-center justify-center">
         <Button className="w-60 text-[#ffffff]" onClick={startLogin}>
           Sign in with Google
