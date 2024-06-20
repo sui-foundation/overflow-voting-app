@@ -490,7 +490,7 @@ export default function Page() {
         </div>
         <br />
         <br />
-        This app was built using the Sui TS SDK. This app demostrates the ease
+        This app was built using the Sui TS SDK. This app demonstrates the ease
         of building a decentralized application with production grade security
         and user experience on Sui. Check out the source code{" "}
         <a
