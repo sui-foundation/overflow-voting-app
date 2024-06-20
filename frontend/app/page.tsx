@@ -194,6 +194,8 @@ export default function Page() {
             .join(";;")
         );
 
+        localStorage.setItem("voteDigest", data.digest);
+
         form.reset({
           projects: [],
         });
