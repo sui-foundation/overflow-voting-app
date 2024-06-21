@@ -159,31 +159,14 @@ export default function Page() {
     fetchProjects();
   }, []);
 
-  useEffect(() => {
-    if (suiAddress) {
-      enokiFlow
-        .getProof({
-          network: "testnet",
-        })
-        .then((proof) => {
-          console.log("Proof", proof);
-        });
-      enokiFlow.getSession().then((session) => {
-        console.log("session", session);
-      });
-    }
-  }, [suiAddress]);
-
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof FormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
 
     toast.promise(vote(values.projects), {
       loading: "Submitting vote...",
       success: async (data) => {
-        console.log(data);
 
         await fetchProjects();
 
@@ -215,7 +198,6 @@ export default function Page() {
         );
       },
       error: (error) => {
-        console.log('error', error);
 
         if (error.errors.length === 0) {
           return 'An error occurred. Please try again later.'
@@ -256,8 +238,6 @@ export default function Page() {
       },
     });
 
-    console.log(res);
-
     if (!res.data || !res.data.content) {
       return;
     }
@@ -273,7 +253,6 @@ export default function Page() {
       }
     );
 
-    console.log(projects);
     setProjects(projects);
   };
 
@@ -284,16 +263,11 @@ export default function Page() {
     const votingProjectIds = txb.makeMoveVec({
       elements: projectIds.map((projectId) => {
         let u64 = txb.pure.u64(projectId.toString());
-        console.log("u64", u64);
         return u64;
       }),
       type: "u64",
     });
 
-    console.log("votingProjectIds", votingProjectIds);
-
-    console.log("votes object address", process.env.VOTES_OBJECT_ADDRESS!);
-    console.log("voting module address", process.env.VOTING_MODULE_ADDRESS!);
     const { addressSeed } = await enokiFlow.getProof({
       network: "testnet",
     });

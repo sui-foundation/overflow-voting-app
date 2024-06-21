@@ -10,7 +10,6 @@ export default function ShareButton() {
 
   useEffect(() => {
     const projectList = localStorage.getItem("votedProjects")?.split(";;") || [];
-    console.log("projectList", projectList);
     const projectLinkInsert = projectList
       .map((project, index) => {
         return `%0A-%20${project}`;
