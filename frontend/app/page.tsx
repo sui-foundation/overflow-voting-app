@@ -51,6 +51,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import { IconBrandYoutube } from "@tabler/icons-react";
+import { track } from "@vercel/analytics/react";
 
 type Project = {
   id: number;
@@ -289,6 +290,12 @@ export default function Page() {
         client,
       });
       setVotingInProgress(false);
+
+      track("vote", {
+        txn: res.digest,
+        user: suiAddress as string,
+        projects: projectIds.join(","),
+      })
 
       return res;
     } catch (error) {
