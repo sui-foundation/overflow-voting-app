@@ -200,7 +200,7 @@ export default function Page() {
       },
       error: (error) => {
 
-        if (error.errors.length === 0) {
+        if (error.errors == undefined || error.errors.length === 0) {
           return 'An error occurred. Please try again later.'
         }
 
